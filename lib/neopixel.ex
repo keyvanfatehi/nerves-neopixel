@@ -44,6 +44,7 @@ defmodule Neopixel do
   require Logger
 
   def start(_type, _args) do
+    IO.puts "Hello Nerves"
     Neopixel.Supervisor.start_link
   end
 

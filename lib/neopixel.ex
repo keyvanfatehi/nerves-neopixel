@@ -4,18 +4,18 @@ defmodule Blinker do
 
   def start_link(pin, opts) do
     {:ok, pid} = Gpio.start_link(pin, :output)
-    GenServer.start_link(__MODULE__, pid, opts)
+    IO.puts "spawned blinker process"
+    blink_forever pid
   end
-
-  def handle_call(:on,  _from, pid), do: {:reply, Gpio.write(pid, 1)}
-  def handle_call(:off, _from, pid), do: {:reply, Gpio.write(pid, 0)}
 
   def blink_forever(pid) do
     Gpio.write(pid, 1)
-
+    IO.puts "ON"
+    
     :timer.sleep 1000
 
     Gpio.write(pid, 0)
+    IO.puts "OFF"
 
     :timer.sleep 1000
 
@@ -44,7 +44,7 @@ defmodule Neopixel do
   require Logger
 
   def start(_type, _args) do
-    IO.puts "Hello Nerves"
+    IO.puts "Hello again Nerves"
     Neopixel.Supervisor.start_link
   end
 
